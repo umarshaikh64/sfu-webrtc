@@ -17,7 +17,12 @@ const options = {
 const httpsServer = https.createServer(options, app)
 const io = require('socket.io')(httpsServer,{cors:true})
 
-app.use(express.static(path.join(__dirname, '..', 'public')))
+// app.use(express.static(path.join(__dirname, '..', 'public')))
+app.use(express.static(path.join(__dirname,'../build')))
+
+app.get("*",(req,res)=>{
+ res.sendFile(path.join(__dirname, "../build/index.html"));
+});
 
 httpsServer.listen(config.listenPort, () => {
   console.log('Listening on https://' + config.listenIp + ':' + config.listenPort)
